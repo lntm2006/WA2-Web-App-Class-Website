@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student's Page</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Student's Page</h1>
+    
+    <h2 id='navigation'>Navigation</h2> 
+    <ul>
+        <li><a href="{{ url_for('home') }}">Home Page</a></li>
+        <li><a href="{{ url_for('teacher') }}">Teacher's Page</a></li>
+    </ul>
+    
+    <h2>View your grades</h2>
+    <form action="/student" method="post">
+        <input type="text" name="student_name" placeholder="Enter your name">
+        <button type="submit">View Grades</button>
+    </form>
+
+    {% if student_score %}
+        <h2>Grades</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Physics</th>
+                    <th>Chemistry</th>
+                    <th>Mathematics</th>
+                    <th>Economics</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in student_score %}
+                    <tr>
+                        <td>{{ row[0] }}</td>
+                        <td>{{ row[1] }}</td>
+                        <td>{{ row[2] }}</td>
+                        <td>{{ row[3] }}</td>
+                        <td>{{ row[4] }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+
+    <h2>Upcoming Assignments</h2>
+    <ul>
+        {% for assignment in upcoming_assignments %}
+            <li>{{ assignment.name }} - Due: {{ assignment.due_date }}</li>
+            </form>
+        {% endfor %}
+    </ul>
+</body>
+</html>

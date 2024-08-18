@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Teacher's Page</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Teacher's Page</h1>
+
+    <h2 id='navigation'>Navigation</h2> 
+    <ul>
+        <li><a href="{{ url_for('home') }}">Home Page</a></li>
+        <li><a href="{{ url_for('student') }}">Student's Page</a></li>
+    </ul>
+
+    <h2>Attendance Tracker</h2>
+    <form action="/teacher" method="post">
+        <input type="date" name="date">
+        <div id="absent-students">
+            <input type="text" name="absent_students" placeholder="Student Name">
+            <input type="text" name="reasons" placeholder="Reason">
+        </div>
+        <button type="button" onclick="addStudent()">Add Another Student</button>
+        <button type="submit">Submit</button>
+    </form>
+
+    <h2>Attendance Records</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Students</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for date, students in attendance.items() %}
+                <tr>
+                    <td>{{ date }}</td>
+                    <td>
+                        <ul>
+                            {% for student, reason in students.items() %}
+                                <li>{{ student }} - {{ reason }}</li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <script>
+        function addStudent() {
+            var newStudent = document.createElement('div');
+            newStudent.innerHTML = `
+                <input type="text" name="absent_students" placeholder="Student Name">
+                <input type="text" name="reasons" placeholder="Reason">
+            `;
+            document.getElementById('absent-students').appendChild(newStudent);
+        }
+    </script>
+</body>
+</html>

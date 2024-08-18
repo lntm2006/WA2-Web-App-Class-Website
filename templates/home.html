@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Welcome to the Class Portal!</h1>
+    
+    <h2 id='navigation'>Navigation</h2> 
+    <ul>
+        <li><a href="{{ url_for('student') }}">Student's Page</a></li>
+        <li><a href="{{ url_for('teacher') }}">Teacher's Page</a></li>
+    </ul>
+    
+    <section id='add_announcement'>
+        <h2>Announcements</h2>
+        <form method="POST">
+            <label for="announcement"></label>
+            <input type="text" name="announcement" id="announcement" placeholder="Type your announcement here..." required>
+            <br>
+            <input type="submit" id='button' value="Announce">
+        </form>
+        <hr>
+    </section>
+
+    <section id="stored_announcement">
+        <h2>Stored Announcements</h2>
+          <hr>
+          {% if announcements %}
+              <ul>
+                  {% for announcement in announcements %}
+                      <li>{{ announcement['datetime'] }} - {{ announcement['announcement'] }}</li>
+                  {% endfor %}
+              </ul>
+          {% else %}
+              <p>There are currently no announcements.</p>
+          {% endif %}
+          <hr>
+    </section>
+    
+    <h2>Class Timetable</h2>
+    <a href="{{ url_for('static', filename='student_timetable (1).pdf') }}">Odd Timetable </a>
+    <br>
+    <a href="{{ url_for('static', filename='student_timetable.pdf') }}">Even Timetable</a>
+
+    <h2>Discussion Forum</h2>
+    <hr>
+      {% if discussions %}
+          <ul>
+              {% for discussion in discussions %}
+                  <li>{{ discussion['datetime'] }} - {{ discussion['discussion'] }}</li>
+              {% endfor %}
+          </ul>
+      {% else %}
+          <p>There are currently no discussions.</p>
+      {% endif %}
+    <hr>
+    <section id='add_discussion'>
+        <h2>Discussions</h2>
+        <form method="POST">
+            <label for="discussion"></label>
+            <input type="text" name="discussion" id="discussion" placeholder="Type your discussion here..." required>
+            <br>
+            <input type="submit" id='button' value="Discuss">
+        </form>
+        <hr>
+    </section>
+
+    <h2>External Resources</h2>
+    <ul>
+        {% for resource in resources %}
+            <li><a href="{{ resource.url }}">{{ resource.name }}</a></li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
