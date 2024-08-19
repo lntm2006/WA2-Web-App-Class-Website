@@ -19,7 +19,9 @@
         <button type="submit">View Grades</button>
     </form>
 
-    {% if student_score %}
+    {% if not student_score %}
+        <p>Student does not exist.</p>
+    {% else %}
         <h2>Grades</h2>
         <table>
             <thead>
