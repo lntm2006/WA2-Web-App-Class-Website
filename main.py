@@ -16,8 +16,8 @@ resources = [
 ]
 attendance = {}  # {date: {student_name: reason}}
 upcoming_assignments = [
-    {'name': 'Assignment 1', 'due_date': '2024-08-30'},
-    {'name': 'Assignment 2', 'due_date': '2024-09-15'}
+    {'name': 'FO2V Tut', 'due_date': '2024-08-30'},
+    {'name': 'Complex 2 Tut', 'due_date': '2024-09-15'}
 ]
 
 def allowed_file(filename):
@@ -134,9 +134,9 @@ def student():
                 next(reader)  # Skip header row
                 student_score = [row for row in reader if row[0] == student_name]
         except FileNotFoundError:
-            return render_template('error.html', message="Student data file not found.")
+            return render_template('student.html', message="Student data file not found.")
         except Exception as e:
-            return render_template('error.html', message=f"An error occurred: {str(e)}")
+            return render_template('student.html', message=f"An error occurred: {str(e)}")
 
         return render_template('student.html', student_score=student_score, upcoming_assignments=upcoming_assignments)
     else:
